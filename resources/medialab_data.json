@@ -1,0 +1,18 @@
+[
+    {
+        "title": "Complete Assignment",
+        "description": "Finish the task management system.",
+        "category": "School",
+        "priority": "High",
+        "deadline": "2024-11-15",
+        "status": "OPEN"
+    },
+    {
+        "title": "Buy Groceries",
+        "description": "Get milk, eggs, and bread.",
+        "category": "Personal",
+        "priority": "Medium",
+        "deadline": "2024-11-10",
+        "status": "DELAYED"
+    }
+]

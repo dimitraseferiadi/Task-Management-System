@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1"
+      fx:controller="gui.MainController" spacing="10">
+    
+    <!-- Summary Section -->
+    <HBox spacing="20">
+        <Label fx:id="lblTotalTasks" text="Total Tasks: 0"/>
+        <Label fx:id="lblCompletedTasks" text="Completed Tasks: 0"/>
+        <Label fx:id="lblDelayedTasks" text="Delayed Tasks: 0"/>
+        <Label fx:id="lblTasksDue" text="Tasks Due in 7 Days: 0"/>
+    </HBox>
+    
+    <!-- Main Content -->
+    <SplitPane orientation="HORIZONTAL">
+        <!-- Task List Section -->
+        <VBox spacing="10" maxWidth="300">
+            <TextField fx:id="txtSearch" promptText="Search Tasks"/>
+            <Button text="Search" onAction="#onSearchTask"/>
+            <ListView fx:id="taskListView"/>
+            <Button text="Add Task" onAction="#onAddTask"/>
+            <Button text="Edit Task" onAction="#onEditTask"/>
+            <Button text="Delete Task" onAction="#onDeleteTask"/>
+        </VBox>
+        
+        <!-- Task Details Section -->
+        <VBox fx:id="taskDetailsBox" spacing="10">
+            <Label text="Task Details"/>
+            <TextField fx:id="txtTaskTitle" promptText="Task Title"/>
+            <TextArea fx:id="txtTaskDescription" promptText="Task Description" wrapText="true"/>
+            <DatePicker fx:id="dpTaskDeadline" promptText="Deadline"/>
+            <ComboBox fx:id="cmbPriority" promptText="Priority"/>
+            <ComboBox fx:id="cmbStatus" promptText="Status"/>
+            <Button text="Save Task" onAction="#onEditTask"/>
+        </VBox>
+    </SplitPane>
+
+    <!-- Categories and Priorities Section -->
+    <HBox spacing="20">
+        <!-- Categories -->
+        <VBox spacing="10" maxWidth="150">
+            <Label text="Categories"/>
+            <ListView fx:id="categoryListView"/>
+            <TextField fx:id="txtCategoryName" promptText="New Category"/>
+            <Button text="Add Category" onAction="#onAddCategory"/>
+            <Button text="Delete Category" onAction="#onDeleteCategory"/>
+        </VBox>
+        
+        <!-- Priorities -->
+        <VBox spacing="10" maxWidth="150">
+            <Label text="Priorities"/>
+            <ListView fx:id="priorityListView"/>
+            <TextField fx:id="txtPriorityName" promptText="New Priority"/>
+            <Button text="Add Priority" onAction="#onAddPriority"/>
+            <Button text="Delete Priority" onAction="#onDeletePriority"/>
+        </VBox>
+    </HBox>
+</VBox>
