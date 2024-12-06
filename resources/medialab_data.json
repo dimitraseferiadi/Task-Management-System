@@ -1,18 +1,32 @@
-[
+{
+  "priorities": [
+    "High",
+    "Low",
+    "Medium",
+    "Default"
+  ],
+  "categories": [
+    "Personal",
+    "Work"
+  ],
+  "tasks": [
     {
-        "title": "Complete Assignment",
-        "description": "Finish the task management system.",
-        "category": "School",
-        "priority": "High",
-        "deadline": "2024-11-15",
-        "status": "OPEN"
+      "id": "task-id-1",
+      "title": "Buy Groceries",
+      "description": "Chips and beer ",
+      "category": "Personal",
+      "priority": "High",
+      "deadline": "2024-12-25",
+      "status": "Open"
     },
     {
-        "title": "Buy Groceries",
-        "description": "Get milk, eggs, and bread.",
-        "category": "Personal",
-        "priority": "Medium",
-        "deadline": "2024-11-10",
-        "status": "DELAYED"
+      "id": "task-id-2",
+      "title": "Task 2",
+      "description": "Whatever",
+      "category": "Work",
+      "priority": "Default",
+      "deadline": "2024-12-09",
+      "status": "In Progress"
     }
-]
+  ]
+}

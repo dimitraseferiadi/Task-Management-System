@@ -21,7 +21,12 @@ public class Task {
         this.deadline = deadline;
         this.status = status;
     }
-
+    
+    @Override
+    public String toString() {
+        return title;
+    }
+    
     public String getId() {
         return id;
     }

@@ -5,8 +5,6 @@ import model.Task;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class TaskManager {
@@ -52,15 +50,52 @@ public class TaskManager {
 
     public void addCategory(String category) {
         categories.add(category);
+        saveTasksToFile();
+    }
+    
+    public void editCategory(String oldCategory, String newCategory) {
+        // Check if the old category exists and new category doesn't already exist
+        if (categories.contains(oldCategory) && !categories.contains(newCategory)) {
+            // Update all tasks with the old category to the new category
+            tasks.forEach(task -> {
+                if (task.getCategory().equals(oldCategory)) {
+                    task.setCategory(newCategory);
+                }
+            });
+
+            categories.remove(oldCategory);
+            categories.add(newCategory);
+
+            saveTasksToFile();
+        }
     }
 
     public void deleteCategory(String category) {
         tasks.removeIf(task -> task.getCategory().equals(category));
         categories.remove(category);
+        saveTasksToFile();
     }
 
     public void addPriority(String priority) {
         priorities.add(priority);
+        saveTasksToFile();
+    }
+    
+    public void editPriority(String oldPriority, String newPriority) {
+        // Check if the old priority exists and new priority doesn't already exist
+        if (priorities.contains(oldPriority) && !priorities.contains(newPriority)) {
+            // Update all tasks with the old priority to the new priority
+            tasks.forEach(task -> {
+                if (task.getPriority().equals(oldPriority)) {
+                    task.setPriority(newPriority);
+                }
+            });
+
+            priorities.remove(oldPriority);
+            priorities.add(newPriority);
+
+            saveTasksToFile();
+        }
     }
 
     public void deletePriority(String priority) {
@@ -71,6 +106,7 @@ public class TaskManager {
                 }
             });
             priorities.remove(priority);
+            saveTasksToFile();
         }
     }
 
@@ -98,9 +134,12 @@ public class TaskManager {
 
     public void loadTasksFromFile() {
         tasks = dataManager.loadTasks();
+        Map<String, Object> data = dataManager.loadData();
+        categories = new HashSet<>((List<String>) data.getOrDefault("categories", new ArrayList<>()));
+        priorities = new HashSet<>((List<String>) data.getOrDefault("priorities", Collections.singletonList("Default")));
     }
 
     public void saveTasksToFile() {
-        dataManager.saveTasks(tasks);
+        dataManager.saveTasks(tasks, new ArrayList<>(categories), new ArrayList<>(priorities));
     }
 }

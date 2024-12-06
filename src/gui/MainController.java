@@ -11,6 +11,7 @@ import model.Task;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class MainController {
 
@@ -39,7 +40,7 @@ public class MainController {
     private TextArea txtTaskDescription;
 
     @FXML
-    private ComboBox<String> cmbPriority, cmbStatus;
+    private ComboBox<String> cmbPriority, cmbStatus, cmbCategory;
 
     private TaskManager taskManager;
 
@@ -64,6 +65,7 @@ public class MainController {
         // Configure ComboBoxes
         cmbPriority.setItems(priorityList);
         cmbStatus.setItems(FXCollections.observableArrayList("Open", "In Progress", "Postponed", "Completed", "Delayed"));
+        cmbCategory.setItems(categoryList);
 
         // Add click listeners
         taskListView.setOnMouseClicked(this::onTaskSelected);
@@ -73,6 +75,17 @@ public class MainController {
         // Refresh summary labels
         refreshSummary();
     }
+    
+    public void setTaskManager(TaskManager taskManager) {
+        this.taskManager = taskManager;
+
+        // Initialize observable lists and refresh the UI
+        taskList.setAll(taskManager.getTasks());
+        categoryList.setAll(taskManager.getCategories());
+        priorityList.setAll(taskManager.getPriorities());
+        refreshSummary();
+    }
+
 
     private void refreshLists() {
         taskList.setAll(taskManager.getTasks());
@@ -91,7 +104,7 @@ public class MainController {
     private void onAddTask() {
         String title = txtTaskTitle.getText();
         String description = txtTaskDescription.getText();
-        String category = categoryListView.getSelectionModel().getSelectedItem();
+        String category = cmbCategory.getValue();
         String priority = cmbPriority.getValue();
         LocalDate deadline = dpTaskDeadline.getValue();
         String status = cmbStatus.getValue();
@@ -117,7 +130,7 @@ public class MainController {
 
         selectedTask.setTitle(txtTaskTitle.getText());
         selectedTask.setDescription(txtTaskDescription.getText());
-        selectedTask.setCategory(categoryListView.getSelectionModel().getSelectedItem());
+        selectedTask.setCategory(cmbCategory.getValue());
         selectedTask.setPriority(cmbPriority.getValue());
         selectedTask.setDeadline(dpTaskDeadline.getValue());
         selectedTask.setStatus(cmbStatus.getValue());
@@ -145,6 +158,7 @@ public class MainController {
         if (selectedTask != null) {
             txtTaskTitle.setText(selectedTask.getTitle());
             txtTaskDescription.setText(selectedTask.getDescription());
+            cmbCategory.setValue(selectedTask.getCategory());
             cmbPriority.setValue(selectedTask.getPriority());
             cmbStatus.setValue(selectedTask.getStatus());
             dpTaskDeadline.setValue(selectedTask.getDeadline());
@@ -162,7 +176,31 @@ public class MainController {
         taskManager.addCategory(categoryName);
         refreshLists();
     }
+    
+    @FXML
+    private void onEditCategory() {
+        String selectedCategory = categoryListView.getSelectionModel().getSelectedItem();
+        if (selectedCategory == null) {
+            showAlert("Error", "No category selected.", Alert.AlertType.ERROR);
+            return;
+        }
 
+        TextInputDialog dialog = new TextInputDialog(selectedCategory);
+        dialog.setTitle("Edit Category");
+        dialog.setHeaderText("Edit Category");
+        dialog.setContentText("Enter new category name:");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(newCategory -> {
+            if (newCategory.isEmpty()) {
+                showAlert("Error", "New category name cannot be empty.", Alert.AlertType.ERROR);
+            } else {
+                taskManager.editCategory(selectedCategory, newCategory);
+                refreshLists();
+            }
+        });
+    }
+    
     @FXML
     private void onDeleteCategory() {
         String selectedCategory = categoryListView.getSelectionModel().getSelectedItem();
@@ -186,6 +224,35 @@ public class MainController {
         taskManager.addPriority(priorityName);
         refreshLists();
     }
+    
+    @FXML
+    private void onEditPriority() {
+        String selectedPriority = priorityListView.getSelectionModel().getSelectedItem();
+        if (selectedPriority == null) {
+            showAlert("Error", "No priority selected.", Alert.AlertType.ERROR);
+            return;
+        }
+        if (selectedPriority.equals("Default")) {
+            showAlert("Error", "Cannot edit the default priority.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        TextInputDialog dialog = new TextInputDialog(selectedPriority);
+        dialog.setTitle("Edit Priority");
+        dialog.setHeaderText("Edit Priority");
+        dialog.setContentText("Enter new priority name:");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(newPriority -> {
+            if (newPriority.isEmpty()) {
+                showAlert("Error", "New priority name cannot be empty.", Alert.AlertType.ERROR);
+            } else {
+                taskManager.editPriority(selectedPriority, newPriority);
+                refreshLists();
+            }
+        });
+    }
+
 
     @FXML
     private void onDeletePriority() {

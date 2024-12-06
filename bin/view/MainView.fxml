@@ -36,6 +36,7 @@
             <DatePicker fx:id="dpTaskDeadline" promptText="Deadline"/>
             <ComboBox fx:id="cmbPriority" promptText="Priority"/>
             <ComboBox fx:id="cmbStatus" promptText="Status"/>
+            <ComboBox fx:id="cmbCategory" promptText="Category"/>
             <Button text="Save Task" onAction="#onEditTask"/>
         </VBox>
     </SplitPane>
@@ -48,6 +49,7 @@
             <ListView fx:id="categoryListView"/>
             <TextField fx:id="txtCategoryName" promptText="New Category"/>
             <Button text="Add Category" onAction="#onAddCategory"/>
+            <Button text="Edit Category" onAction="#onEditCategory"/>
             <Button text="Delete Category" onAction="#onDeleteCategory"/>
         </VBox>
         
@@ -57,6 +59,7 @@
             <ListView fx:id="priorityListView"/>
             <TextField fx:id="txtPriorityName" promptText="New Priority"/>
             <Button text="Add Priority" onAction="#onAddPriority"/>
+            <Button text="Edit Priority" onAction="#onEditPriority"/>
             <Button text="Delete Priority" onAction="#onDeletePriority"/>
         </VBox>
     </HBox>
