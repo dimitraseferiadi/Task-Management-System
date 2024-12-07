@@ -45,22 +45,14 @@
     <HBox spacing="20">
         <!-- Categories -->
         <VBox spacing="10" maxWidth="150">
-            <Label text="Categories"/>
-            <ListView fx:id="categoryListView"/>
-            <TextField fx:id="txtCategoryName" promptText="New Category"/>
-            <Button text="Add Category" onAction="#onAddCategory"/>
-            <Button text="Edit Category" onAction="#onEditCategory"/>
-            <Button text="Delete Category" onAction="#onDeleteCategory"/>
+			<Label text="Categories" onMouseClicked="#onManageCategories" style="-fx-cursor: hand; -fx-font-size: 16;" />
+			<ListView fx:id="categoryListView"/>
         </VBox>
         
         <!-- Priorities -->
         <VBox spacing="10" maxWidth="150">
-            <Label text="Priorities"/>
-            <ListView fx:id="priorityListView"/>
-            <TextField fx:id="txtPriorityName" promptText="New Priority"/>
-            <Button text="Add Priority" onAction="#onAddPriority"/>
-            <Button text="Edit Priority" onAction="#onEditPriority"/>
-            <Button text="Delete Priority" onAction="#onDeletePriority"/>
+			<Label text="Priorities" onMouseClicked="#onManagePriorities" style="-fx-cursor: hand; -fx-font-size: 16;" />
+			<ListView fx:id="priorityListView"/>
         </VBox>
     </HBox>
 </VBox>

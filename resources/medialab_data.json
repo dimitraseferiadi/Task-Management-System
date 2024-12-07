@@ -15,7 +15,7 @@
       "title": "Buy Groceries",
       "description": "Chips and beer ",
       "category": "Personal",
-      "priority": "High",
+      "priority": "Low",
       "deadline": "2024-12-25",
       "status": "Open"
     },

@@ -3,18 +3,23 @@ package gui;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import logic.TaskManager;
 import model.Task;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 public class MainController {
-
+	
     @FXML
     private Label lblTotalTasks, lblCompletedTasks, lblDelayedTasks, lblTasksDue;
 
@@ -50,6 +55,7 @@ public class MainController {
 
     public void initialize() {
         taskManager = new TaskManager();
+        
         taskList = FXCollections.observableArrayList();
         categoryList = FXCollections.observableArrayList();
         priorityList = FXCollections.observableArrayList();
@@ -85,12 +91,22 @@ public class MainController {
         priorityList.setAll(taskManager.getPriorities());
         refreshSummary();
     }
+    
+    public void refreshPriorities() {
+        priorityList.setAll(taskManager.getPriorities());
+    }
+    
+    public void refreshCategories() {
+        categoryList.setAll(taskManager.getCategories());
+    }
 
 
-    private void refreshLists() {
+    public void refreshLists() {
         taskList.setAll(taskManager.getTasks());
         categoryList.setAll(taskManager.getCategories());
         priorityList.setAll(taskManager.getPriorities());
+        refreshPriorities();
+        refreshCategories();
     }
 
     private void refreshSummary() {
@@ -99,6 +115,51 @@ public class MainController {
         lblDelayedTasks.setText("Delayed Tasks: " + taskManager.getDelayedTaskCount());
         lblTasksDue.setText("Tasks Due in 7 Days: " + taskManager.getTasksDueSoonCount());
     }
+    
+    @FXML
+    private void onManagePriorities() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PrioritiesView.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Manage Priorities");
+            stage.setScene(new Scene(loader.load()));
+
+            // Pass TaskManager instance to the new controller
+            PrioritiesController controller = loader.getController();
+            controller.initializeWithTaskManager(taskManager, this);
+
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to open priorities management window.", Alert.AlertType.ERROR);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            showAlert("Error", "FXML file not found. Check the file path.", Alert.AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    private void onManageCategories() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CategoriesView.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Manage Categories");
+            stage.setScene(new Scene(loader.load()));
+
+            // Pass TaskManager instance to the new controller
+            CategoriesController controller = loader.getController();
+            controller.initializeWithTaskManager(taskManager, this);
+
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to open categories management window.", Alert.AlertType.ERROR);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            showAlert("Error", "FXML file not found. Check the file path.", Alert.AlertType.ERROR);
+        }
+    }
+
 
     @FXML
     private void onAddTask() {
@@ -164,106 +225,41 @@ public class MainController {
             dpTaskDeadline.setValue(selectedTask.getDeadline());
         }
     }
-
-    @FXML
-    private void onAddCategory() {
-        String categoryName = txtCategoryName.getText();
-        if (categoryName.isEmpty()) {
-            showAlert("Error", "Category name cannot be empty.", Alert.AlertType.ERROR);
-            return;
-        }
-
-        taskManager.addCategory(categoryName);
-        refreshLists();
-    }
     
-    @FXML
-    private void onEditCategory() {
-        String selectedCategory = categoryListView.getSelectionModel().getSelectedItem();
-        if (selectedCategory == null) {
-            showAlert("Error", "No category selected.", Alert.AlertType.ERROR);
-            return;
-        }
-
-        TextInputDialog dialog = new TextInputDialog(selectedCategory);
-        dialog.setTitle("Edit Category");
-        dialog.setHeaderText("Edit Category");
-        dialog.setContentText("Enter new category name:");
-
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(newCategory -> {
-            if (newCategory.isEmpty()) {
-                showAlert("Error", "New category name cannot be empty.", Alert.AlertType.ERROR);
+    private void refreshTaskDetails() {
+        Task selectedTask = taskListView.getSelectionModel().getSelectedItem();
+        if (selectedTask != null) {
+            // Check if the current task's category or priority still exists
+            if (!categoryList.contains(selectedTask.getCategory()) || !priorityList.contains(selectedTask.getPriority())) {
+                // If category or priority no longer exists, clear task details
+                clearTaskDetails();
             } else {
-                taskManager.editCategory(selectedCategory, newCategory);
-                refreshLists();
+                // Update task details fields
+                txtTaskTitle.setText(selectedTask.getTitle());
+                txtTaskDescription.setText(selectedTask.getDescription());
+                cmbCategory.setValue(selectedTask.getCategory());
+                cmbPriority.setValue(selectedTask.getPriority());
+                cmbStatus.setValue(selectedTask.getStatus());
+                dpTaskDeadline.setValue(selectedTask.getDeadline());
             }
-        });
+        }
     }
     
-    @FXML
-    private void onDeleteCategory() {
-        String selectedCategory = categoryListView.getSelectionModel().getSelectedItem();
-        if (selectedCategory == null) {
-            showAlert("Error", "Please select a category to delete.", Alert.AlertType.ERROR);
-            return;
-        }
-
-        taskManager.deleteCategory(selectedCategory);
-        refreshLists();
-    }
-
-    @FXML
-    private void onAddPriority() {
-        String priorityName = txtPriorityName.getText();
-        if (priorityName.isEmpty()) {
-            showAlert("Error", "Priority name cannot be empty.", Alert.AlertType.ERROR);
-            return;
-        }
-
-        taskManager.addPriority(priorityName);
-        refreshLists();
+    private void clearTaskDetails() {
+        txtTaskTitle.clear();
+        txtTaskDescription.clear();
+        cmbCategory.setValue(null);
+        cmbPriority.setValue(null);
+        cmbStatus.setValue(null);
+        dpTaskDeadline.setValue(null);
     }
     
-    @FXML
-    private void onEditPriority() {
-        String selectedPriority = priorityListView.getSelectionModel().getSelectedItem();
-        if (selectedPriority == null) {
-            showAlert("Error", "No priority selected.", Alert.AlertType.ERROR);
-            return;
-        }
-        if (selectedPriority.equals("Default")) {
-            showAlert("Error", "Cannot edit the default priority.", Alert.AlertType.ERROR);
-            return;
-        }
-
-        TextInputDialog dialog = new TextInputDialog(selectedPriority);
-        dialog.setTitle("Edit Priority");
-        dialog.setHeaderText("Edit Priority");
-        dialog.setContentText("Enter new priority name:");
-
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(newPriority -> {
-            if (newPriority.isEmpty()) {
-                showAlert("Error", "New priority name cannot be empty.", Alert.AlertType.ERROR);
-            } else {
-                taskManager.editPriority(selectedPriority, newPriority);
-                refreshLists();
-            }
-        });
+    public void onCategoryModified() {
+        refreshTaskDetails();
     }
 
-
-    @FXML
-    private void onDeletePriority() {
-        String selectedPriority = priorityListView.getSelectionModel().getSelectedItem();
-        if (selectedPriority == null || selectedPriority.equals("Default")) {
-            showAlert("Error", "Cannot delete default priority.", Alert.AlertType.ERROR);
-            return;
-        }
-
-        taskManager.deletePriority(selectedPriority);
-        refreshLists();
+    public void onPriorityModified() {
+        refreshTaskDetails();
     }
 
     @FXML

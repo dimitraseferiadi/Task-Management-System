@@ -75,6 +75,7 @@ public class TaskManager {
         categories.remove(category);
         saveTasksToFile();
     }
+    
 
     public void addPriority(String priority) {
         priorities.add(priority);
