@@ -10,39 +10,39 @@
 <VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
       fx:controller="gui.PrioritiesController"
       spacing="15" alignment="CENTER" prefWidth="400" prefHeight="400"
-      style="-fx-padding: 20; -fx-background-color: #f4f4f4; -fx-border-color: #d1d1d1; -fx-border-radius: 10; -fx-background-radius: 10;">
+      style="-fx-padding: 20; -fx-background-color: #f4e6f9; -fx-border-color: #b185db; -fx-border-radius: 10; -fx-background-radius: 10;">
 
     <!-- Title Label -->
     <Label text="Manage Priorities"
-           style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2a2a2a;" />
+           style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #4b2d57;" />
 
     <!-- ListView for displaying priorities -->
     <ListView fx:id="priorityListView"
               prefHeight="250"
-              style="-fx-border-color: #c1c1c1; -fx-border-radius: 5;" />
+              style="-fx-border-color: #b185db; -fx-border-radius: 5; -fx-background-radius: 5;" />
 
     <!-- HBox for TextField and Add Button -->
     <HBox spacing="10" alignment="CENTER">
         <TextField fx:id="txtPriorityName"
                    promptText="Enter new priority"
-                   style="-fx-pref-width: 200; -fx-padding: 5; -fx-border-radius: 5;" />
+                   style="-fx-pref-width: 200; -fx-padding: 5; -fx-border-color: #b185db; -fx-border-radius: 5; -fx-background-radius: 5;" />
         <Button text="Add Priority"
                 onAction="#onAddPriority"
-                style="-fx-background-color: #4caf50; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5;" />
+                style="-fx-background-color: #d4a5e6; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 10; -fx-background-radius: 10;" />
     </HBox>
 
     <!-- Instructional Label -->
     <Label text="Select one of the priorities above to manage them."
-           style="-fx-font-weight: bold; -fx-text-fill: #555555; -fx-padding: 5;" />
+           style="-fx-font-weight: bold; -fx-text-fill: #985f99; -fx-padding: 5;" />
 
     <!-- HBox for Edit and Delete Buttons -->
     <HBox spacing="15" alignment="CENTER">
         <Button text="Edit Priority"
                 onAction="#onEditPriority"
-                style="-fx-background-color: #2196f3; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5;" />
+                style="-fx-background-color: #b185db; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 10; -fx-background-radius: 10;" />
         <Button text="Delete Priority"
                 onAction="#onDeletePriority"
-                style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5;" />
+                style="-fx-background-color: #a86bae; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 10; -fx-background-radius: 10;" />
     </HBox>
 
 </VBox>

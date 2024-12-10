@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Pos?>
+
+<VBox spacing="15" xmlns:fx="http://javafx.com/fxml" fx:controller="gui.TaskController"
+      style="-fx-padding: 20; -fx-background-color: #f4e6f9; -fx-border-color: #b185db; -fx-border-radius: 10; -fx-background-radius: 10;">
+
+    <!-- Title Label -->
+    <Label text="Add Task"
+           style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #4b2d57;" />
+
+    <!-- Task Title Input -->
+    <TextField fx:id="txtTitle"
+               promptText="Task Title" />
+
+    <!-- Task Description Input -->
+    <TextArea fx:id="txtDescription"
+              promptText="Description"/>
+
+    <!-- Category Dropdown -->
+    <ComboBox fx:id="cmbCategory"
+              promptText="Category"/>
+
+    <!-- Priority Dropdown -->
+    <ComboBox fx:id="cmbPriority"
+              promptText="Priority"/>
+
+    <!-- Deadline Date Picker -->
+    <DatePicker fx:id="dpDeadline"/>
+
+    <!-- Status Dropdown -->
+    <ComboBox fx:id="cmbStatus"
+              promptText="Status"/>
+
+    <!-- Buttons Section -->
+    <HBox spacing="15" alignment="CENTER">
+        <Button text="Save"
+                onAction="#onSave"
+                style="-fx-background-color: #b185db; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10 20;" />
+
+        <Button text="Cancel"
+                onAction="#onCancel"
+                style="-fx-background-color: #d4a5e6; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10 20;" />
+    </HBox>
+
+</VBox>

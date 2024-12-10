@@ -1,1 +1,64 @@
+/* General styles */
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: #f4f4f4;
+}
+
+/* Search Section */
+.text-field {
+    -fx-font-size: 14px;
+    -fx-pref-height: 30px;
+}
+
+.button {
+    -fx-background-color: #2a5db0;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-radius: 5;
+}
+
+.button:hover {
+    -fx-background-color: #1e3c78;
+}
+
+/* Radio Buttons */
+.radio-button {
+    -fx-font-size: 14px;
+    -fx-text-fill: #555;
+}
+
+.radio-button:selected .radio {
+    -fx-background-color: #2a5db0;
+}
+
+/* Task Statistic Boxes */
+.pane {
+    -fx-background-color: #e0e0e0;
+    -fx-background-radius: 10;
+    -fx-padding: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 2, 2);
+}
+
+.pane:hover {
+    -fx-background-color: #d0d0d0;
+}
+
+/* Task Cards */
+.task-card {
+    -fx-background-color: #fff9c4;
+    -fx-border-color: #fdd835;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 10;
+}
+
+.task-card:hover {
+    -fx-background-color: #fff59d;
+    -fx-border-color: #fbc02d;
+}
+
+/* Labels */
+.label {
+    -fx-font-size: 14px;
+}
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */

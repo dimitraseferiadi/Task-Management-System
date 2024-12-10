@@ -1,58 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.collections.FXCollections?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
 
 <VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1"
-      fx:controller="gui.MainController" spacing="10">
-    
-    <!-- Summary Section -->
-    <HBox spacing="20">
-        <Label fx:id="lblTotalTasks" text="Total Tasks: 0"/>
-        <Label fx:id="lblCompletedTasks" text="Completed Tasks: 0"/>
-        <Label fx:id="lblDelayedTasks" text="Delayed Tasks: 0"/>
-        <Label fx:id="lblTasksDue" text="Tasks Due in 7 Days: 0"/>
-    </HBox>
-    
-    <!-- Main Content -->
-    <SplitPane orientation="HORIZONTAL">
-        <!-- Task List Section -->
-        <VBox spacing="10" maxWidth="300">
-            <TextField fx:id="txtSearch" promptText="Search Tasks"/>
-            <Button text="Search" onAction="#onSearchTask"/>
-            <ListView fx:id="taskListView"/>
-            <Button text="Add Task" onAction="#onAddTask"/>
-            <Button text="Edit Task" onAction="#onEditTask"/>
-            <Button text="Delete Task" onAction="#onDeleteTask"/>
-        </VBox>
-        
-        <!-- Task Details Section -->
-        <VBox fx:id="taskDetailsBox" spacing="10">
-            <Label text="Task Details"/>
-            <TextField fx:id="txtTaskTitle" promptText="Task Title"/>
-            <TextArea fx:id="txtTaskDescription" promptText="Task Description" wrapText="true"/>
-            <DatePicker fx:id="dpTaskDeadline" promptText="Deadline"/>
-            <ComboBox fx:id="cmbPriority" promptText="Priority"/>
-            <ComboBox fx:id="cmbStatus" promptText="Status"/>
-            <ComboBox fx:id="cmbCategory" promptText="Category"/>
-            <Button text="Save Task" onAction="#onEditTask"/>
-        </VBox>
-    </SplitPane>
+      fx:controller="gui.MainController" spacing="25" style="-fx-background-color: #f4e6f9; -fx-padding: 10;">
 
-    <!-- Categories and Priorities Section -->
-    <HBox spacing="20">
-        <!-- Categories -->
-        <VBox spacing="10" maxWidth="150">
-			<Label text="Categories" onMouseClicked="#onManageCategories" style="-fx-cursor: hand; -fx-font-size: 16;" />
-			<ListView fx:id="categoryListView"/>
+    <!-- Search Section -->
+    <HBox spacing="15" alignment="CENTER_LEFT">
+        <TextField fx:id="txtSearch" promptText="Search for a task..." prefWidth="300"
+                   style="-fx-font-size: 14px; -fx-padding: 8; -fx-border-color: #b185db; -fx-background-radius: 5;"/>
+
+        <RadioButton fx:id="rbTitle" text="By Title" selected="true" style="-fx-text-fill: #985f99; -fx-font-size: 14px;"/>
+        <RadioButton fx:id="rbCategory" text="By Category" style="-fx-text-fill: #985f99; -fx-font-size: 14px;"/>
+        <RadioButton fx:id="rbPriority" text="By Priority" style="-fx-text-fill: #985f99; -fx-font-size: 14px;"/>
+
+        <Button text="Search" style="-fx-background-color: #b185db; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 8 15; -fx-background-radius: 10;"/>
+    </HBox>
+
+    <!-- Task Statistics Overview -->
+    <HBox spacing="20" alignment="CENTER">
+        <VBox fx:id="paneTotalTasks" prefWidth="160" prefHeight="80"
+              style="-fx-background-color: #d4a5e6; -fx-background-radius: 15; -fx-alignment: CENTER;">
+            <Label fx:id="lblTotalTasks" text="15" style="-fx-text-fill: #4b2d57; -fx-font-weight: bold; -fx-font-size: 1em;"/>
         </VBox>
-        
-        <!-- Priorities -->
-        <VBox spacing="10" maxWidth="150">
-			<Label text="Priorities" onMouseClicked="#onManagePriorities" style="-fx-cursor: hand; -fx-font-size: 16;" />
-			<ListView fx:id="priorityListView"/>
+
+        <VBox fx:id="paneCompletedTasks" prefWidth="160" prefHeight="80"
+              style="-fx-background-color: #c18bd7; -fx-background-radius: 15; -fx-alignment: CENTER;">
+            <Label fx:id="lblCompletedTasks" text="8" style="-fx-text-fill: #4b2d57; -fx-font-weight: bold; -fx-font-size: 1em;"/>
+        </VBox>
+
+        <VBox fx:id="paneDelayedTasks" prefWidth="160" prefHeight="80"
+              style="-fx-background-color: #a86bae; -fx-background-radius: 15; -fx-alignment: CENTER;">
+            <Label fx:id="lblDelayedTasks" text="2" style="-fx-text-fill: #4b2d57; -fx-font-weight: bold; -fx-font-size: 1em;"/>
+        </VBox>
+
+        <VBox fx:id="paneTasksDue" prefWidth="160" prefHeight="80"
+              style="-fx-background-color: #8b5e8b; -fx-background-radius: 15; -fx-alignment: CENTER;">
+            <Label fx:id="lblTasksDue" text="5" style="-fx-text-fill: #f4e6f9; -fx-font-weight: bold; -fx-font-size: 1em;"/>
+        </VBox>
+    </HBox>
+
+    <!-- Task Display Area -->
+    <ScrollPane prefHeight="300" style="-fx-border-color: #b185db; -fx-background-radius: 10;">
+        <FlowPane fx:id="taskDisplayArea" hgap="12" vgap="12">
+            <!-- Tasks will be added dynamically here -->
+        </FlowPane>
+    </ScrollPane>
+
+    <!-- Add Task Button -->
+    <Button text="+ Add New Task" onAction="#openAddTaskWindow" style="-fx-background-color: #d4a5e6; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-pref-width: 220; -fx-padding: 10; -fx-background-radius: 20;"/>
+
+    <!-- Categories, Priorities, and Reminders Section -->
+    <HBox spacing="25">
+        <VBox spacing="15">
+            <Label text="Categories" onMouseClicked="#onManageCategories" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #985f99;"/>
+            <ListView fx:id="categoryListView" prefHeight="200" style="-fx-border-color: #b185db; -fx-background-radius: 10;"/>
+        </VBox>
+
+        <VBox spacing="15">
+            <Label text="Priorities" onMouseClicked="#onManagePriorities" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #985f99;"/>
+            <ListView fx:id="priorityListView" prefHeight="200" style="-fx-border-color: #b185db; -fx-background-radius: 10;"/>
+        </VBox>
+
+        <VBox spacing="15">
+            <Label text="Reminders" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #985f99;"/>
+            <ListView fx:id="reminderListView" prefHeight="200" style="-fx-border-color: #b185db; -fx-background-radius: 10;"/>
         </VBox>
     </HBox>
 </VBox>

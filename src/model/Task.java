@@ -19,7 +19,7 @@ public class Task {
         this.category = category;
         this.priority = priority;
         this.deadline = deadline;
-        this.status = status;
+        this.status = "Open";
     }
     
     @Override

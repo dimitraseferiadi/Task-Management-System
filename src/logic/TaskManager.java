@@ -39,6 +39,28 @@ public class TaskManager {
     public List<Task> getTasks() {
         return new ArrayList<>(tasks);
     }
+    
+    public List<Task> getCompletedTasks() {
+        return tasks.stream()
+                .filter(task -> "Completed".equals(task.getStatus()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Task> getDelayedTasks() {
+        return tasks.stream()
+                .filter(task -> "Delayed".equals(task.getStatus()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Task> getTasksDueSoon() {
+        LocalDate today = LocalDate.now();
+        LocalDate nextWeek = today.plusDays(7);
+        return tasks.stream()
+                .filter(task -> task.getDeadline() != null && 
+                                !task.getDeadline().isBefore(today) && 
+                                task.getDeadline().isBefore(nextWeek))
+                .collect(Collectors.toList());
+    }
 
     public List<String> getCategories() {
         return new ArrayList<>(categories);
@@ -126,7 +148,26 @@ public class TaskManager {
                 .filter(task -> task.getDeadline().isAfter(today) && task.getDeadline().isBefore(nextWeek))
                 .count();
     }
+    
 
+    // Search Methods
+    public List<Task> searchTasksByTitle(String query) {
+        return tasks.stream()
+                .filter(task -> task.getTitle().toLowerCase().contains(query.toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Task> searchTasksByCategory(String query) {
+        return tasks.stream()
+                .filter(task -> task.getCategory() != null && task.getCategory().toLowerCase().contains(query.toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Task> searchTasksByPriority(String query) {
+        return tasks.stream()
+                .filter(task -> task.getPriority() != null && task.getPriority().toLowerCase().contains(query.toLowerCase()))
+                .collect(Collectors.toList());
+    }
     public List<Task> searchTasks(String query) {
         return tasks.stream()
                 .filter(task -> task.getTitle().toLowerCase().contains(query.toLowerCase()))

@@ -38,7 +38,6 @@ public class CategoriesController {
         }
 
         taskManager.addCategory(categoryName);
-        //categoryList.setAll(taskManager.getCategories());
         updateCategoryList();
         txtCategoryName.clear();
     }
@@ -67,9 +66,7 @@ public class CategoriesController {
                 showAlert("Error", "New category name cannot be empty.", Alert.AlertType.ERROR);
             } else {
                 taskManager.editCategory(selectedCategory, newCategory);
-                //categoryList.setAll(taskManager.getCategories());
                 updateCategoryList();
-                mainController.onCategoryModified();
             }
         });
     }
@@ -83,13 +80,11 @@ public class CategoriesController {
         }
 
         taskManager.deleteCategory(selectedCategory);
-        //categoryList.setAll(taskManager.getCategories());
         updateCategoryList();
-        mainController.onCategoryModified();
     }
     
     private void updateCategoryList() {
-        categoryList.setAll(taskManager.getCategories());
+    	categoryList.setAll(taskManager.getCategories());
         mainController.refreshLists();
     }
 

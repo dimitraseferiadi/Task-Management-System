@@ -26,7 +26,16 @@
       "category": "Work",
       "priority": "Default",
       "deadline": "2024-12-09",
-      "status": "In Progress"
+      "status": "Delayed"
+    },
+    {
+      "id": "eaa25f8c-eb3c-4f2d-8a23-064197b0141d",
+      "title": "Buy Bags",
+      "description": "zadig\u003c33",
+      "category": "Personal",
+      "priority": "High",
+      "deadline": "2024-12-16",
+      "status": "Open"
     }
   ]
 }

@@ -38,7 +38,6 @@ public class PrioritiesController {
         }
 
         taskManager.addPriority(priorityName);
-        //priorityList.setAll(taskManager.getPriorities());
         updatePriorityList();
         txtPriorityName.clear();
     }
@@ -67,9 +66,7 @@ public class PrioritiesController {
                 showAlert("Error", "New priority name cannot be empty.", Alert.AlertType.ERROR);
             } else {
                 taskManager.editPriority(selectedPriority, newPriority);
-                //priorityList.setAll(taskManager.getPriorities());
                 updatePriorityList();
-                mainController.onPriorityModified();
             }
         });
     }
@@ -83,13 +80,11 @@ public class PrioritiesController {
         }
 
         taskManager.deletePriority(selectedPriority);
-        //priorityList.setAll(taskManager.getPriorities());
         updatePriorityList();
-        mainController.onPriorityModified();
     }
     
     private void updatePriorityList() {
-        priorityList.setAll(taskManager.getPriorities());
+    	priorityList.setAll(taskManager.getPriorities());
         mainController.refreshLists();
     }
 
