@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-//import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -12,13 +11,16 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 import logic.TaskManager;
+import model.Reminder;
+
 import model.Task;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
-//import java.util.Optional;
+
 
 public class MainController {
 	
@@ -47,7 +49,7 @@ public class MainController {
     private TextArea txtTaskDescription;
 
     @FXML
-    private ComboBox<String> cmbPriority, cmbStatus, cmbCategory;
+    private ComboBox<String> cmbPriority, cmbStatus, cmbCategory, cmbCategoryFilter;
     
     @FXML
     private RadioButton rbTitle, rbCategory, rbPriority;
@@ -71,11 +73,17 @@ public class MainController {
     @FXML
     private Pane paneTasksDue;
     
+    @FXML
+    private ListView<String> lstReminders;
+    
     private TaskManager taskManager;
 
     private ObservableList<Task> taskList;
     private ObservableList<String> categoryList;
     private ObservableList<String> priorityList;
+    
+    private ObservableList<String> reminderDisplayList;
+
 
     public void initialize() {
         taskManager = new TaskManager();
@@ -83,26 +91,36 @@ public class MainController {
         taskList = FXCollections.observableArrayList();
         categoryList = FXCollections.observableArrayList();
         priorityList = FXCollections.observableArrayList();
-
+        reminderDisplayList = FXCollections.observableArrayList();
+        
         // Load data
         refreshLists();
 
         // Bind lists to ListViews
         categoryListView.setItems(categoryList);
         priorityListView.setItems(priorityList);
-
+        lstReminders.setItems(reminderDisplayList);
+        
         // Add click listeners
         categoryListView.setOnMouseClicked(this::onCategorySelected);
         priorityListView.setOnMouseClicked(this::onPrioritySelected);
+        
+        cmbCategoryFilter.setItems(categoryList);
         
         searchToggleGroup = new ToggleGroup();
         rbTitle.setToggleGroup(searchToggleGroup);
         rbCategory.setToggleGroup(searchToggleGroup);
         rbPriority.setToggleGroup(searchToggleGroup);
         
-        // Refresh summary labels
+        // Refresh summary labels  
+        updateOverdueTasks();
+        
         refreshSummary();
         refreshTaskDisplay(taskManager.getTasks());
+        refreshReminders();
+        
+        // Check for overdue tasks and display popup
+        showOverdueTasksPopup();
     }
     
     public void setTaskManager(TaskManager taskManager) {
@@ -126,6 +144,8 @@ public class MainController {
     public void refreshTasks() {
     	taskList.setAll(taskManager.getTasks());
     	refreshTaskDisplay(taskManager.getTasks());
+    	refreshSummary();
+    	refreshReminders();
     }
 
     private void refreshSummary() {
@@ -134,6 +154,17 @@ public class MainController {
         lblDelayedTasks.setText("Delayed Tasks: " + taskManager.getDelayedTaskCount());
         lblTasksDue.setText("Tasks Due in 7 Days: " + taskManager.getTasksDueSoonCount());
     }
+    
+    private void refreshReminders() {
+        reminderDisplayList.clear();
+        for (Task task : taskManager.getTasks()) {
+            for (Reminder reminder : task.getReminders()) {
+                String reminderText = "Task: " + task.getTitle() + " | Reminder: " + reminder.getReminderDate();
+                reminderDisplayList.add(reminderText);
+            }
+        }
+    }
+
     
     private void refreshTaskDisplay(List<Task> tasks) {
         taskDisplayArea.getChildren().clear();
@@ -240,6 +271,7 @@ public class MainController {
             showAlert("Error", "FXML file not found. Check the file path.", Alert.AlertType.ERROR);
         }
     }
+
     
     private void openTaskWindow(Task task) {
         try {
@@ -278,15 +310,6 @@ public class MainController {
         }
     }
 
-    
-    private void clearTaskDetails() {
-        txtTaskTitle.clear();
-        txtTaskDescription.clear();
-        cmbCategory.setValue(null);
-        cmbPriority.setValue(null);
-        cmbStatus.setValue(null);
-        dpTaskDeadline.setValue(null);
-    }
 
     @FXML
     private void onSearch() {
@@ -327,6 +350,35 @@ public class MainController {
 
         refreshTaskDisplay(filteredTasks);
     }
+    
+    private void showOverdueTasksPopup() {
+        long overdueCount = taskManager.getTasks().stream()
+                .filter(task -> "Delayed".equals(task.getStatus()))
+                .count();
+
+        if (overdueCount > 0) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Overdue Tasks");
+            alert.setHeaderText("You have overdue tasks!");
+            alert.setContentText("There are " + overdueCount + " tasks that are in a 'Delayed' state.");
+
+            alert.showAndWait();
+        }
+    }
+    
+    @FXML
+    private void onCategoryFilterSelected() {
+        String selectedCategory = cmbCategoryFilter.getSelectionModel().getSelectedItem();
+        if (selectedCategory != null) {
+            // Filter tasks by the selected category
+            List<Task> filteredTasks = taskManager.getTasksByCategory(selectedCategory);
+            refreshTaskDisplay(filteredTasks);
+        } else {
+            // If no category is selected, show all tasks
+            refreshTaskDisplay(taskManager.getTasks());
+        }
+    }
+
 
     private void onCategorySelected(MouseEvent event) {
         // Implement category-specific actions if needed

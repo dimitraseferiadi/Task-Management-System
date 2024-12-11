@@ -168,17 +168,40 @@ public class TaskManager {
                 .filter(task -> task.getPriority() != null && task.getPriority().toLowerCase().contains(query.toLowerCase()))
                 .collect(Collectors.toList());
     }
+    
     public List<Task> searchTasks(String query) {
         return tasks.stream()
                 .filter(task -> task.getTitle().toLowerCase().contains(query.toLowerCase()))
                 .collect(Collectors.toList());
     }
+    
+    public List<Task> getTasksByCategory(String category) {
+        return tasks.stream()
+                    .filter(task -> category.equals(task.getCategory()))
+                    .collect(Collectors.toList());
+    }
 
     public void loadTasksFromFile() {
         tasks = dataManager.loadTasks();
         Map<String, Object> data = dataManager.loadData();
-        categories = new HashSet<>((List<String>) data.getOrDefault("categories", new ArrayList<>()));
-        priorities = new HashSet<>((List<String>) data.getOrDefault("priorities", Collections.singletonList("Default")));
+        Object categoriesObj = data.getOrDefault("categories", new ArrayList<>());
+        categories = new HashSet<>();
+        if (categoriesObj instanceof List) {
+            categories.addAll(((List<?>) categoriesObj).stream()
+                .filter(String.class::isInstance)
+                .map(String.class::cast)
+                .toList());
+        }
+
+        Object prioritiesObj = data.getOrDefault("priorities", Collections.singletonList("Default"));
+        priorities = new HashSet<>();
+        if (prioritiesObj instanceof List) {
+            priorities.addAll(((List<?>) prioritiesObj).stream()
+                .filter(String.class::isInstance)
+                .map(String.class::cast)
+                .toList());
+        }
+
     }
 
     public void saveTasksToFile() {

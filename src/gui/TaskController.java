@@ -1,12 +1,17 @@
 package gui;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.Reminder;
 import model.Task;
 import logic.TaskManager;
 
@@ -29,7 +34,13 @@ public class TaskController {
 
     @FXML
     private ComboBox<String> cmbStatus;
-
+    
+    @FXML
+    private VBox reminderSection;
+    
+    @FXML
+    private ListView<String> lstReminders;
+    
     private Task task;
     private TaskManager taskManager;
     private MainController mainController;
@@ -76,6 +87,12 @@ public class TaskController {
         cmbPriority.setValue(task.getPriority());
         dpDeadline.setValue(task.getDeadline());
         cmbStatus.setValue(task.getStatus());
+        
+        if ("Completed".equals(task.getStatus())) {
+        	reminderSection.setVisible(false);
+        } else {
+            loadReminders(); // Otherwise, load the reminders as usual
+        }
     }
 
     @FXML
@@ -94,6 +111,7 @@ public class TaskController {
              }
 
             task = new Task(title, description, category, priority, deadline, status);
+            task.clearRemindersIfCompleted();
             taskManager.addTask(task);
         } else {
             task.setTitle(txtTitle.getText());
@@ -102,7 +120,8 @@ public class TaskController {
             task.setPriority(cmbPriority.getValue());
             task.setDeadline(dpDeadline.getValue());
             task.setStatus(cmbStatus.getValue());
-
+            
+            task.clearRemindersIfCompleted();
             taskManager.updateTask(task);
         }
 
@@ -121,6 +140,33 @@ public class TaskController {
     @FXML
     private void onCancel() {
         closeWindow();
+    }
+    
+    public void loadReminders() {
+        lstReminders.getItems().clear();
+        if (!"Completed".equals(task.getStatus())) {
+	        for (Reminder reminder : task.getReminders()) {
+	            lstReminders.getItems().add(reminder.toString());
+	        }
+        }
+    }
+    
+    @FXML
+    private void onManageReminders() {
+        // Open a new window to manage reminders
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ReminderView.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Manage Reminders");
+            stage.setScene(new Scene(loader.load()));
+
+            ReminderController reminderController = loader.getController();
+            reminderController.initializeWithTask(task, this);
+
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void closeWindow() {

@@ -3,7 +3,9 @@ package data;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import javafx.collections.ObservableList;
 import model.Task;
+import model.Reminder;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -21,6 +23,7 @@ public class DataManager {
     public DataManager() {
         gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .registerTypeAdapter(new TypeToken<ObservableList<Reminder>>() {}.getType(), new ObservableListDeserializer())
                 .setPrettyPrinting()
                 .create();
     }

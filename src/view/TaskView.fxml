@@ -7,34 +7,44 @@
 
 <VBox spacing="15" xmlns:fx="http://javafx.com/fxml" fx:controller="gui.TaskController"
       style="-fx-padding: 20; -fx-background-color: #f4e6f9; -fx-border-color: #b185db; -fx-border-radius: 10; -fx-background-radius: 10;">
-
+    
     <!-- Title Label -->
     <Label text="Edit Task"
            style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #4b2d57;" />
 
-    <!-- Task Title Input -->
-    <TextField fx:id="txtTitle"
-               promptText="Task Title" />
+    <!-- HBox for form layout with task details on the left and reminder section on the right -->
+    <HBox spacing="20">
+        <!-- Left VBox for task details -->
+        <VBox spacing="15" alignment="TOP_LEFT">
+            <TextField fx:id="txtTitle"
+                       promptText="Task Title" />
 
-    <!-- Task Description Input -->
-    <TextArea fx:id="txtDescription"
-              promptText="Description"/>
+            <TextArea fx:id="txtDescription"
+                      promptText="Description"/>
 
-    <!-- Category Dropdown -->
-    <ComboBox fx:id="cmbCategory"
-              promptText="Category"/>
+            <ComboBox fx:id="cmbCategory"
+                      promptText="Category"/>
 
-    <!-- Priority Dropdown -->
-    <ComboBox fx:id="cmbPriority"
-              promptText="Priority"/>
+            <ComboBox fx:id="cmbPriority"
+                      promptText="Priority"/>
 
-    <!-- Deadline Date Picker -->
-    <DatePicker fx:id="dpDeadline"/>
+            <DatePicker fx:id="dpDeadline"/>
 
-    <!-- Status Dropdown -->
-    <ComboBox fx:id="cmbStatus"
-              promptText="Status"/>
+            <ComboBox fx:id="cmbStatus"
+                      promptText="Status"/>
+        </VBox>
 
+        <!-- Right VBox for reminder section -->
+        <VBox fx:id="reminderSection" spacing="15" alignment="TOP_LEFT">
+            <Label text="Reminders" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #985f99;"/>
+            <ListView fx:id="lstReminders" prefHeight="100" />
+            
+            <Button text="Manage Reminders"
+                    onAction="#onManageReminders"
+                    style="-fx-background-color: #b185db; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10 20;" />
+        </VBox>
+    </HBox>
+    
     <!-- Buttons Section -->
     <HBox spacing="15" alignment="CENTER" prefWidth="100">
         <HBox spacing="15" alignment="CENTER_LEFT">
@@ -54,5 +64,4 @@
                 onAction="#onDelete"
                 style="-fx-background-color: #a86bae; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10 20;" />
     </HBox>
-
 </VBox>

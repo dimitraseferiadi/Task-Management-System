@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15" xmlns:fx="http://javafx.com/fxml" fx:controller="gui.ReminderController"
+      style="-fx-padding: 20; -fx-background-color: #f4e6f9; -fx-border-color: #b185db; -fx-border-radius: 10; -fx-background-radius: 10;">
+
+    <!-- Title Label -->
+    <Label text="Manage Reminders"
+           style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #4b2d57;" />
+
+    <!-- ComboBox for selecting reminder type -->
+    <ComboBox fx:id="cmbReminderType"
+              promptText="Select Reminder Type"
+              style="-fx-padding: 8; -fx-border-color: #b185db; -fx-border-radius: 5; -fx-background-radius: 5;" />
+
+    <!-- DatePicker for custom reminder date -->
+    <DatePicker fx:id="dpCustomDate"
+                promptText="Select Custom Date"
+                visible="false"
+                style="-fx-padding: 8; -fx-border-color: #b185db; -fx-border-radius: 5; -fx-background-radius: 5;" />
+
+    <!-- ListView for reminders -->
+    <ListView fx:id="lstReminders"
+              prefHeight="150"
+              style="-fx-border-color: #b185db; -fx-border-radius: 5; -fx-background-radius: 5;" />
+
+    <!-- Buttons Section -->
+    <HBox spacing="15" alignment="CENTER">
+        <Button text="Add Reminder"
+                onAction="#onAddReminder"
+                style="-fx-background-color: #b185db; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10 20;" />
+
+        <Button text="Edit Reminder"
+                onAction="#onEditReminder"
+                style="-fx-background-color: #d36ab1; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10 20;" />
+               
+        <Button text="Delete Reminder"
+                onAction="#onDeleteReminder"
+                style="-fx-background-color: #a86bae; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10 20;" />
+    </HBox>
+
+    <!-- Close Button -->
+    <Button text="Close"
+            onAction="#onClose"
+            style="-fx-background-color: #d4a5e6; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10 20;" />
+
+</VBox>
