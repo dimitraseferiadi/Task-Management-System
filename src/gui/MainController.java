@@ -84,7 +84,13 @@ public class MainController {
     
     private ObservableList<String> reminderDisplayList;
 
-
+    /**
+     * Initializes the main controller by setting up the task manager, observable lists,
+     * binding UI elements, updating filters, and refreshing the task display and statistics.
+     * <p>
+     * This method is automatically called after the FXML file is loaded.
+     * </p>
+     */
     public void initialize() {
         taskManager = new TaskManager();
         
@@ -101,12 +107,8 @@ public class MainController {
         priorityListView.setItems(priorityList);
         lstReminders.setItems(reminderDisplayList);
         
-        // Add click listeners
-        categoryListView.setOnMouseClicked(this::onCategorySelected);
-        priorityListView.setOnMouseClicked(this::onPrioritySelected);
-        
-        cmbCategoryFilter.setItems(categoryList);
-        
+        updateCategoryFilter();
+ 
         searchToggleGroup = new ToggleGroup();
         rbTitle.setToggleGroup(searchToggleGroup);
         rbCategory.setToggleGroup(searchToggleGroup);
@@ -123,6 +125,12 @@ public class MainController {
         showOverdueTasksPopup();
     }
     
+    /**
+     * Sets the TaskManager instance for the controller and updates the UI to reflect the current tasks,
+     * categories, and priorities.
+     *
+     * @param taskManager the TaskManager instance used to retrieve and manage tasks
+     */
     public void setTaskManager(TaskManager taskManager) {
         this.taskManager = taskManager;
 
@@ -134,6 +142,10 @@ public class MainController {
         refreshSummary();
     }
 
+    /**
+     * Refreshes the lists of categories and priorities from the TaskManager,
+     * and updates the task display and summary information.
+     */
     public void refreshLists() {
         categoryList.setAll(taskManager.getCategories());
         priorityList.setAll(taskManager.getPriorities());
@@ -141,9 +153,16 @@ public class MainController {
         refreshTasks();
     }
     
+    /**
+     * Refreshes the task list by updating the internal list of tasks, refreshing the displayed tasks,
+     * updating the category filter, and refreshing the summary and reminders.
+     */
     public void refreshTasks() {
     	taskList.setAll(taskManager.getTasks());
     	refreshTaskDisplay(taskManager.getTasks());
+    	
+    	updateCategoryFilter();
+    	
     	refreshSummary();
     	refreshReminders();
     }
@@ -205,6 +224,16 @@ public class MainController {
             }
         }
     }
+    
+    private void updateCategoryFilter() {
+        ObservableList<String> categoryFilterList = FXCollections.observableArrayList();
+        categoryFilterList.add("All Categories"); 
+        categoryFilterList.addAll(categoryList);
+
+        cmbCategoryFilter.setItems(categoryFilterList);
+        cmbCategoryFilter.getSelectionModel().select("All Categories");
+    }
+
     
     @FXML
     private void onManageTasks() {
@@ -291,6 +320,13 @@ public class MainController {
         }
     }
     
+    /**
+     * Opens the Add Task window where the user can create a new task.
+     * <p>
+     * This method loads the corresponding FXML view and initializes the TaskController
+     * for adding a new task. The window is displayed to the user without mentioning the internal exceptions.
+     * </p>
+     */
     @FXML
     public void openAddTaskWindow() {
         try {
@@ -369,24 +405,16 @@ public class MainController {
     @FXML
     private void onCategoryFilterSelected() {
         String selectedCategory = cmbCategoryFilter.getSelectionModel().getSelectedItem();
-        if (selectedCategory != null) {
+        if (selectedCategory == null || selectedCategory.equals("All Categories")) {
+            // Show all tasks if "All Categories" is selected
+            refreshTaskDisplay(taskManager.getTasks());
+        } else {
             // Filter tasks by the selected category
             List<Task> filteredTasks = taskManager.getTasksByCategory(selectedCategory);
             refreshTaskDisplay(filteredTasks);
-        } else {
-            // If no category is selected, show all tasks
-            refreshTaskDisplay(taskManager.getTasks());
         }
     }
 
-
-    private void onCategorySelected(MouseEvent event) {
-        // Implement category-specific actions if needed
-    }
-
-    private void onPrioritySelected(MouseEvent event) {
-        // Implement priority-specific actions if needed
-    }
 
     private void showAlert(String title, String message, Alert.AlertType alertType) {
         Alert alert = new Alert(alertType);

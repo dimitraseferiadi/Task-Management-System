@@ -1,0 +1,287 @@
+{
+  "priorities": [
+    "High",
+    "Low",
+    "Medium",
+    "Default"
+  ],
+  "categories": [
+    "Personal",
+    "Health",
+    "Finance",
+    "Work",
+    "Hobbies"
+  ],
+  "tasks": [
+    {
+      "id": "8c145ad2-a1d3-4867-8cf1-51dbd10b29c4",
+      "title": "Prepare Presentation",
+      "description": "Finalize slides for Monday\u0027s meeting",
+      "category": "Work",
+      "priority": "Medium",
+      "deadline": "2025-03-03",
+      "status": "In Progress",
+      "reminders": [
+        {
+          "type": "One Day Before",
+          "reminderDate": "2025-03-02"
+        },
+        {
+          "type": "Custom",
+          "reminderDate": "2025-03-01"
+        }
+      ]
+    },
+    {
+      "id": "97d485e6-e8db-4c36-b6df-d0969b07a086",
+      "title": "Morning Run",
+      "description": "5km jog in the park",
+      "category": "Health",
+      "priority": "Default",
+      "deadline": "2025-02-20",
+      "status": "Delayed",
+      "reminders": [
+        {
+          "type": "One Day Before",
+          "reminderDate": "2025-02-19"
+        }
+      ]
+    },
+    {
+      "id": "517843ed-d320-4a81-b4dc-a810dc858118",
+      "title": "Pay Utility Bills",
+      "description": "Electricity and water bills due this week",
+      "category": "Finance",
+      "priority": "High",
+      "deadline": "2025-03-02",
+      "status": "Completed",
+      "reminders": []
+    },
+    {
+      "id": "7d018feb-09e8-4ec0-872a-5ae5ecadb41c",
+      "title": "Practice Guitar",
+      "description": "Learn a new chord progression",
+      "category": "Hobbies",
+      "priority": "Low",
+      "deadline": "2025-03-31",
+      "status": "In Progress",
+      "reminders": [
+        {
+          "type": "One Week Before",
+          "reminderDate": "2025-03-24"
+        },
+        {
+          "type": "Custom",
+          "reminderDate": "2025-03-17"
+        },
+        {
+          "type": "Custom",
+          "reminderDate": "2025-03-10"
+        },
+        {
+          "type": "Custom",
+          "reminderDate": "2025-03-03"
+        },
+        {
+          "type": "Custom",
+          "reminderDate": "2025-02-06"
+        }
+      ]
+    },
+    {
+      "id": "8082b5da-c37c-4d24-b509-db63daa58986",
+      "title": "Team Meeting",
+      "description": "Discuss project milestones",
+      "category": "Work",
+      "priority": "Default",
+      "deadline": "2025-03-07",
+      "status": "In Progress",
+      "reminders": [
+        {
+          "type": "One Week Before",
+          "reminderDate": "2025-02-28"
+        },
+        {
+          "type": "One Day Before",
+          "reminderDate": "2025-03-06"
+        }
+      ]
+    },
+    {
+      "id": "7d6ca316-cee1-4284-98f6-e19f53edee7c",
+      "title": "Yoga Session",
+      "description": "Attend an online yoga class",
+      "category": "Health",
+      "priority": "Default",
+      "deadline": "2025-03-07",
+      "status": "Open",
+      "reminders": [
+        {
+          "type": "One Day Before",
+          "reminderDate": "2025-03-06"
+        }
+      ]
+    },
+    {
+      "id": "cda77e6d-2ab6-4012-9256-ea51fb6e4278",
+      "title": "Review Credit Card Statement",
+      "description": "Check for any unauthorized charges",
+      "category": "Finance",
+      "priority": "Default",
+      "deadline": "2025-03-08",
+      "status": "Open",
+      "reminders": [
+        {
+          "type": "One Day Before",
+          "reminderDate": "2025-03-07"
+        }
+      ]
+    },
+    {
+      "id": "26d372c9-9e94-44c5-8e52-94e7799ef588",
+      "title": "Painting Workshop",
+      "description": "Attend a weekend art class",
+      "category": "Hobbies",
+      "priority": "Default",
+      "deadline": "2025-03-29",
+      "status": "Postponed",
+      "reminders": [
+        {
+          "type": "One Week Before",
+          "reminderDate": "2025-03-22"
+        },
+        {
+          "type": "One Month Before",
+          "reminderDate": "2025-02-28"
+        }
+      ]
+    },
+    {
+      "id": "b99201e6-43f3-40f5-b31b-5adb62878200",
+      "title": "Book Doctor Appointment",
+      "description": "Schedule a routine check-up",
+      "category": "Health",
+      "priority": "Medium",
+      "deadline": "2025-03-03",
+      "status": "Postponed",
+      "reminders": [
+        {
+          "type": "One Day Before",
+          "reminderDate": "2025-03-02"
+        }
+      ]
+    },
+    {
+      "id": "d2445c8f-7378-4118-a213-c5ba3ad2e40f",
+      "title": "Client Follow-Up",
+      "description": "Email clients about the recent proposal",
+      "category": "Work",
+      "priority": "High",
+      "deadline": "2025-02-28",
+      "status": "In Progress",
+      "reminders": [
+        {
+          "type": "One Week Before",
+          "reminderDate": "2025-02-21"
+        },
+        {
+          "type": "One Day Before",
+          "reminderDate": "2025-02-27"
+        }
+      ]
+    },
+    {
+      "id": "d40ac7d0-a295-4ec6-a41e-67b23123f9bf",
+      "title": "Budget Review",
+      "description": "Plan monthly expenses and savings",
+      "category": "Finance",
+      "priority": "Low",
+      "deadline": "2025-02-28",
+      "status": "Open",
+      "reminders": [
+        {
+          "type": "One Day Before",
+          "reminderDate": "2025-02-27"
+        }
+      ]
+    },
+    {
+      "id": "c34d88ac-f75a-4c6a-abea-c8f623759e60",
+      "title": "Photography Walk",
+      "description": "Explore local areas for scenic photos",
+      "category": "Hobbies",
+      "priority": "Low",
+      "deadline": "2025-04-30",
+      "status": "Postponed",
+      "reminders": [
+        {
+          "type": "One Day Before",
+          "reminderDate": "2025-04-29"
+        },
+        {
+          "type": "One Week Before",
+          "reminderDate": "2025-04-23"
+        }
+      ]
+    },
+    {
+      "id": "9023302c-9af1-4d6f-8445-f3003cd960c6",
+      "title": "Project Deadline",
+      "description": "Complete the quarterly report",
+      "category": "Work",
+      "priority": "High",
+      "deadline": "2025-03-31",
+      "status": "Completed",
+      "reminders": []
+    },
+    {
+      "id": "29396e3c-5f43-4cce-adce-91033354f7db",
+      "title": "Dinner with Friends",
+      "description": "Plan a dinner outing this weekend",
+      "category": "Personal",
+      "priority": "Medium",
+      "deadline": "2025-03-07",
+      "status": "Open",
+      "reminders": [
+        {
+          "type": "One Day Before",
+          "reminderDate": "2025-03-06"
+        },
+        {
+          "type": "Custom",
+          "reminderDate": "2025-03-05"
+        }
+      ]
+    },
+    {
+      "id": "96bba789-9412-4f0c-bea7-7606c6316895",
+      "title": "Investment Research",
+      "description": "Analyze market trends for potential investments",
+      "category": "Finance",
+      "priority": "Low",
+      "deadline": "2025-05-31",
+      "status": "In Progress",
+      "reminders": [
+        {
+          "type": "One Day Before",
+          "reminderDate": "2025-05-30"
+        }
+      ]
+    },
+    {
+      "id": "979166c9-4528-41d8-b549-90190c88d9de",
+      "title": "Buy Groceries",
+      "description": "Chips and beer",
+      "category": "Personal",
+      "priority": "High",
+      "deadline": "2025-02-23",
+      "status": "Open",
+      "reminders": [
+        {
+          "type": "One Day Before",
+          "reminderDate": "2025-02-22"
+        }
+      ]
+    }
+  ]
+}

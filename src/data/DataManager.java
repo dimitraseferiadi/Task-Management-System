@@ -17,7 +17,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class DataManager {
-    private static final String taskFile = "resources/medialab_data.json";
+    private static final String taskFile = "medialab/medialab_data.json";
     private final Gson gson;
 
     public DataManager() {

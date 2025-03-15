@@ -1,64 +1,132 @@
-/* General styles */
+/* General Styles */
 .root {
-    -fx-font-family: "Segoe UI", sans-serif;
-    -fx-background-color: #f4f4f4;
+    -fx-background-color: #f4e6f9;
+    -fx-padding: 15px;
+    -fx-font-family: "Arial", sans-serif;
 }
 
 /* Search Section */
-.text-field {
+#txtSearch {
     -fx-font-size: 14px;
-    -fx-pref-height: 30px;
+    -fx-padding: 10px;
+    -fx-border-color: #b185db;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-background-color: #ffffff;
+}
+
+.radio-button {
+    -fx-text-fill: #7a3f74;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
 }
 
 .button {
-    -fx-background-color: #2a5db0;
+    -fx-background-color: #a86bae;
     -fx-text-fill: white;
     -fx-font-size: 14px;
-    -fx-background-radius: 5;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 12px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 2);
 }
 
 .button:hover {
-    -fx-background-color: #1e3c78;
+    -fx-background-color: #985f99;
 }
 
-/* Radio Buttons */
-.radio-button {
-    -fx-font-size: 14px;
-    -fx-text-fill: #555;
+/* Task Statistics Overview */
+#paneTotalTasks, #paneCompletedTasks, #paneDelayedTasks, #paneTasksDue {
+    -fx-pref-width: 170px;
+    -fx-pref-height: 85px;
+    -fx-background-radius: 20px;
+    -fx-alignment: center;
+    -fx-padding: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 8, 0, 0, 3);
 }
 
-.radio-button:selected .radio {
-    -fx-background-color: #2a5db0;
+#paneTotalTasks {
+    -fx-background-color: #d4a5e6;
 }
 
-/* Task Statistic Boxes */
-.pane {
-    -fx-background-color: #e0e0e0;
-    -fx-background-radius: 10;
-    -fx-padding: 10;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 2, 2);
+#paneCompletedTasks {
+    -fx-background-color: #c18bd7;
 }
 
-.pane:hover {
-    -fx-background-color: #d0d0d0;
+#paneDelayedTasks {
+    -fx-background-color: #a86bae;
 }
 
-/* Task Cards */
-.task-card {
-    -fx-background-color: #fff9c4;
-    -fx-border-color: #fdd835;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
-    -fx-padding: 10;
+#paneTasksDue {
+    -fx-background-color: #8b5e8b;
 }
 
-.task-card:hover {
-    -fx-background-color: #fff59d;
-    -fx-border-color: #fbc02d;
-}
-
-/* Labels */
 .label {
-    -fx-font-size: 14px;
+    -fx-text-fill: #4b2d57;
+    -fx-font-weight: bold;
+    -fx-font-size: 1.2em;
 }
-/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+#lblTasksDue {
+    -fx-text-fill: #f4e6f9;
+}
+
+/* Category Filter Drop-Down */
+#cmbCategoryFilter {
+    -fx-background-color: #b185db;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 12px;
+    -fx-padding: 8px 12px;
+}
+
+/* Task Display Area */
+.scroll-pane {
+    -fx-border-color: #b185db;
+    -fx-background-radius: 12px;
+    -fx-padding: 5px;
+}
+
+/* Add Task Button */
+#addTaskButton {
+    -fx-background-color: #d4a5e6;
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-pref-width: 230px;
+    -fx-padding: 12px;
+    -fx-background-radius: 25px;
+}
+
+#addTaskButton:hover {
+    -fx-background-color: #c18bd7;
+}
+
+/* Categories, Priorities, and Reminders Section */
+.list-view {
+    -fx-border-color: #b185db;
+    -fx-background-radius: 12px;
+    -fx-padding: 5px;
+}
+
+/* Section Titles */
+.label {
+    -fx-font-weight: bold;
+    -fx-font-size: 17px;
+    -fx-text-fill: #7a3f74;
+}
+
+/* Manage Buttons */
+.manage-button {
+    -fx-background-color: #b185db;
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-padding: 6px 12px;
+    -fx-background-radius: 12px;
+    -fx-font-weight: bold;
+}
+
+.manage-button:hover {
+    -fx-background-color: #985f99;
+}

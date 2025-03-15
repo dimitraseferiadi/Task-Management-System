@@ -89,6 +89,12 @@ public class ReminderController {
             showAlert("Reminder date cannot be after the task deadline.");
             return;
         }
+        
+        if (reminderDate.isBefore(LocalDate.now())) {
+            showAlert("You cannot set a reminder for a past date.");
+            return;
+        }
+
 
         Reminder newReminder = new Reminder(selectedType, reminderDate);
         task.getReminders().add(newReminder);
@@ -139,6 +145,11 @@ public class ReminderController {
 
         if (reminderDate.isAfter(task.getDeadline())) {
             showAlert("Reminder date cannot be after the task deadline.");
+            return;
+        }
+        
+        if (reminderDate.isBefore(LocalDate.now())) {
+            showAlert("You cannot set a reminder for a past date.");
             return;
         }
 

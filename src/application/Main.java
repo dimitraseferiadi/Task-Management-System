@@ -6,6 +6,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.Screen;
 import logic.TaskManager;
+
+
 import gui.MainController;
 
 public class Main extends Application {
@@ -22,7 +24,7 @@ public class Main extends Application {
             double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
             double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
 
-            // Set the scene to use a portion of the screen size (e.g., 80%)
+            // Set the scene to use a portion of the screen size
             primaryStage.setWidth(screenWidth * 0.8);
             primaryStage.setHeight(screenHeight * 0.9);
 
@@ -36,7 +38,7 @@ public class Main extends Application {
             MainController controller = loader.getController();
             TaskManager taskManager = new TaskManager(); // Initialize TaskManager
             controller.setTaskManager(taskManager);
-
+            
             primaryStage.setTitle("MediaLab Task Manager");
             primaryStage.show();
 

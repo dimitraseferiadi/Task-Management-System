@@ -46,8 +46,7 @@ public class TaskController {
     private MainController mainController;
     
     private boolean isNewTask = false;
-    
-    // private ObservableList<Task> taskList;
+
     private ObservableList<String> categoryList;
     private ObservableList<String> priorityList;
     
@@ -59,6 +58,12 @@ public class TaskController {
         cmbPriority.setItems(priorityList);
         cmbStatus.setItems(FXCollections.observableArrayList("Open", "In Progress", "Postponed", "Completed", "Delayed"));
         cmbCategory.setItems(categoryList);
+        
+        dpDeadline.valueProperty().addListener((observable, oldDate, newDate) -> {
+            if (newDate != null && task != null) {
+                updateAutomaticReminders(newDate);
+            }
+        });
     }
     
     public void initializeForNewTask(TaskManager taskManager, MainController mainController) {
@@ -70,6 +75,7 @@ public class TaskController {
         priorityList.setAll(taskManager.getPriorities());
 
         cmbStatus.setValue("Open"); // Default status for new tasks
+        cmbPriority.setValue("Default"); // Default priority for new tasks
     }
 
     // Method to initialize the controller with task data
@@ -168,6 +174,36 @@ public class TaskController {
             e.printStackTrace();
         }
     }
+    
+    private void updateAutomaticReminders(LocalDate newDeadline) {
+        // Iterate over task reminders
+        for (Reminder reminder : task.getReminders()) {
+            // Only update reminders that are not custom
+            if (!"Custom".equals(reminder.getType())) {
+                LocalDate updatedDate = null;
+                switch (reminder.getType()) {
+                    case "One Day Before":
+                        updatedDate = newDeadline.minusDays(1);
+                        break;
+                    case "One Week Before":
+                        updatedDate = newDeadline.minusWeeks(1);
+                        break;
+                    case "One Month Before":
+                        updatedDate = newDeadline.minusMonths(1);
+                        break;
+                }
+                // Update the reminder if a new date was computed
+                if (updatedDate != null) {
+                    reminder.setReminderDate(updatedDate);
+                }
+            }
+        }
+        // Optionally, if you have a ListView displaying reminders, refresh it here
+        if (lstReminders != null) {
+            lstReminders.refresh();
+        }
+    }
+
 
     private void closeWindow() {
         Stage stage = (Stage) txtTitle.getScene().getWindow();

@@ -3,7 +3,7 @@ package model;
 import java.time.LocalDate;
 
 public class Reminder {
-    private String type; // e.g., "One Day Before", "One Week Before", "One Month Before", "Custom"
+    private String type;
     private LocalDate reminderDate;
 
     public Reminder(String type, LocalDate reminderDate) {
